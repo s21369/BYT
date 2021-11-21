@@ -1,6 +1,7 @@
 package b_Money;
 
 public class Money implements Comparable {
+
 	private int amount;
 	private Currency currency;
 
@@ -16,10 +17,10 @@ public class Money implements Comparable {
 	
 	/**
 	 * Return the amount of money.
-	 * @return Amount of money in Double type.
+	 * @return Amount of money in Integer type.
 	 */
 	public Integer getAmount() {
-		return null;
+		return amount;
 	}
 	
 	/**
@@ -27,7 +28,7 @@ public class Money implements Comparable {
 	 * @return Currency object representing the currency of this Money
 	 */
 	public Currency getCurrency() {
-		return null;
+		return currency;
 	}
 	
 	/**
@@ -37,7 +38,11 @@ public class Money implements Comparable {
 	 *  @return String representing the amount of Money.
 	 */
 	public String toString() {
-		return null;
+		String amountStr = String.valueOf(amount);
+		return String.format("%s.%s %s",
+				amount != 0 ? amountStr.substring(0, amountStr.length() - 2) : "0",
+				amount != 0 ? amountStr.substring(amountStr.length() - 2) : "00",
+				currency.getName());
 	}
 	
 	/**
@@ -45,7 +50,7 @@ public class Money implements Comparable {
 	 * @return The value of the Money in the "universal currency".
 	 */
 	public Integer universalValue() {
-		return null;
+		return currency.universalValue(amount);
 	}
 	
 	/**
@@ -54,7 +59,7 @@ public class Money implements Comparable {
 	 * @return A Boolean indicating if the two monies are equal.
 	 */
 	public Boolean equals(Money other) {
-		return null;
+		return universalValue().equals(other.universalValue());
 	}
 	
 	/**
@@ -64,7 +69,7 @@ public class Money implements Comparable {
 	 * (Remember to convert the other Money before adding the amounts)
 	 */
 	public Money add(Money other) {
-		return null;
+		return new Money(universalValue() + other.universalValue(), currency);
 	}
 
 	/**
@@ -74,7 +79,7 @@ public class Money implements Comparable {
 	 * (Again, remember converting the value of the other Money to this Currency)
 	 */
 	public Money sub(Money other) {
-		return null;
+		return new Money(universalValue() - other.universalValue(), currency);
 	}
 	
 	/**
@@ -82,26 +87,33 @@ public class Money implements Comparable {
 	 * @return True if the amount of this Money is equal to 0.0, False otherwise
 	 */
 	public Boolean isZero() {
-		return null;
+		return amount == 0 ? true : false;
 	}
 	/**
 	 * Negate the amount of money, i.e. if the amount is 10.0 SEK the negation returns -10.0 SEK
 	 * @return A new instance of the money class initialized with the new negated money amount.
 	 */
 	public Money negate() {
-		return null;
+		return new Money(-amount, currency);
 	}
 	
 	/**
 	 * Compare two Monies.
 	 * compareTo is required because the class implements the Comparable interface.
 	 * (Remember the universalValue method, and that Integers already implement Comparable).
-	 * Also, since compareTo must take an Object, you will have to explicitly downcast it to a Money.
+	 * Also, since compareTo must take an Object, you will have to explicitly downcast it to Money.
 	 * @return 0 if the values of the monies are equal.
 	 * A negative integer if this Money is less valuable than the other Money.
-	 * A positive integer if this Money is more valuiable than the other Money.
+	 * A positive integer if this Money is more valuable than the other Money.
 	 */
 	public int compareTo(Object other) {
-		return 0;
+		Money otherMoney = (Money)other;
+		int res = universalValue() - otherMoney.universalValue();
+		if (res == 0) {
+			return 0;
+		} else if (res > 0) {
+			return 1;
+		}
+		return -1;
 	}
 }

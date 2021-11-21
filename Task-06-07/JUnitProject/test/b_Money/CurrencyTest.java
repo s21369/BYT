@@ -18,27 +18,40 @@ public class CurrencyTest {
 
 	@Test
 	public void testGetName() {
-		fail("Write test case here");
+		assertEquals("SEK", SEK.getName());
+		assertEquals("DKK", DKK.getName());
+		assertEquals("EUR", EUR.getName());
 	}
 	
 	@Test
 	public void testGetRate() {
-		fail("Write test case here");
+		assertEquals(Double.valueOf(0.15), SEK.getRate());
+		assertEquals(Double.valueOf(0.20), DKK.getRate());
+		assertEquals(Double.valueOf(1.5), EUR.getRate());
 	}
 	
 	@Test
 	public void testSetRate() {
-		fail("Write test case here");
+		EUR.setRate(1.3);
+		assertEquals(Double.valueOf(1.3), EUR.getRate());
+		DKK.setRate(0.25);
+		assertEquals(Double.valueOf(0.25), DKK.getRate());
+		SEK.setRate(0.17);
+		assertEquals(Double.valueOf(0.17), SEK.getRate());
 	}
 	
 	@Test
 	public void testGlobalValue() {
-		fail("Write test case here");
+		assertEquals(Integer.valueOf(225), SEK.universalValue(1500));
+		assertEquals(Integer.valueOf(400), DKK.universalValue(2000));
+		assertEquals(Integer.valueOf(1500), EUR.universalValue(1000));
 	}
 	
 	@Test
 	public void testValueInThisCurrency() {
-		fail("Write test case here");
+		assertEquals(Integer.valueOf(15000), SEK.valueInThisCurrency(1500, EUR));
+		assertEquals(Integer.valueOf(525), DKK.valueInThisCurrency(700, SEK));
+		assertEquals(Integer.valueOf(200), EUR.valueInThisCurrency(1500, DKK));
 	}
 
 }
