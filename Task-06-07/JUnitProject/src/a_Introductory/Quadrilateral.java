@@ -2,14 +2,9 @@ package a_Introductory;
 
 public class Quadrilateral {
 
-	private Point p1, p2, p3, p4;
-	private Line l1, l2, l3, l4;
+	private final Line l1, l2, l3, l4;
 	
-	Quadrilateral(Point p1, Point p2, Point p3, Point p4) {
-		this.p1 = p1;
-		this.p2 = p2;
-		this.p3 = p3;
-		this.p4 = p4;
+	public Quadrilateral(Point p1, Point p2, Point p3, Point p4) {
 		this.l1 = new Line(p1, p2);
 		this.l2 = new Line(p2, p3);
 		this.l3 = new Line(p3, p4);

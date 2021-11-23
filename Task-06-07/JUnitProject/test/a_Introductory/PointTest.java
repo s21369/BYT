@@ -1,12 +1,12 @@
 package a_Introductory;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class PointTest {
+
 	Point p1, p2, p3;
 	
 	@Before

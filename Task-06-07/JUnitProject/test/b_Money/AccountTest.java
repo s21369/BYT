@@ -5,9 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AccountTest {
-	Currency SEK, DKK;
-	Bank Nordea;
-	Bank DanskeBank;
+
+	Currency SEK;
 	Bank SweBank;
 	Account testAccount;
 	
@@ -16,7 +15,7 @@ public class AccountTest {
 		SEK = new Currency("SEK", 0.15);
 		SweBank = new Bank("SweBank", SEK);
 		SweBank.openAccount("Alice");
-		testAccount = new Account("Hans", SEK);
+		testAccount = new Account(SEK);
 		testAccount.deposit(new Money(10_000_000, SEK));
 		SweBank.deposit("Alice", new Money(1_000_000, SEK));
 	}
@@ -24,7 +23,7 @@ public class AccountTest {
 	@Test
 	public void testAddRemoveTimedPayment() {
 		String id = "tp1";
-		testAccount.addTimedPayment(id, 1, 1, new Money(100_000, SEK), SweBank, "Alice");
+		testAccount.addTimedPayment(id, 0, 0, new Money(100_000, SEK), SweBank, "Alice");
 		assertTrue(testAccount.timedPaymentExists(id));
 		testAccount.removeTimedPayment(id);
 		assertFalse(testAccount.timedPaymentExists(id));
@@ -35,7 +34,7 @@ public class AccountTest {
 		int nPayments = 5;
 		int amountToPay = 100_000;
 		assertEquals(Integer.valueOf(10_000_000), testAccount.getBalance().getAmount());
-		testAccount.addTimedPayment("tp1", 1, 1, new Money(amountToPay, SEK), SweBank, "Alice");
+		testAccount.addTimedPayment("tp1", 0, 0, new Money(amountToPay, SEK), SweBank, "Alice");
 		for (int i = 0; i < nPayments; i++) {
 			testAccount.tick();
 		}
@@ -55,4 +54,5 @@ public class AccountTest {
 	public void testGetBalance() {
 		assertEquals(Integer.valueOf(10_000_000), testAccount.getBalance().getAmount());
 	}
+
 }

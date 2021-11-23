@@ -1,7 +1,8 @@
 package b_Money;
 
 public class Currency {
-	private String name;
+
+	private final String name;
 	private Double rate;
 	
 	/**

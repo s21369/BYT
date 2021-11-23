@@ -6,10 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class QuadrilateralTest {
+
 	Quadrilateral square1, square2, rectangle1, rectangle2, quad;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		/* Set up two squares,
 		 * two rectangles that are not squares,
 		 * and a quad that is neither a rectangle nor a square. */
@@ -32,12 +33,13 @@ public class QuadrilateralTest {
 	
 	@Test
 	public void testSquare() {
-		String tmsg = "Should be a square";
-		String fmsg = "Should not be a square";
-		assertTrue(tmsg, square1.isSquare());
-		assertTrue(tmsg, square2.isSquare());
-		assertFalse(fmsg, rectangle1.isSquare());
-		assertFalse(fmsg, rectangle2.isSquare());
-		assertFalse(fmsg, quad.isSquare());
+		String tMsg = "Should be a square";
+		String fMsg = "Should not be a square";
+		assertTrue(tMsg, square1.isSquare());
+		assertTrue(tMsg, square2.isSquare());
+		assertFalse(fMsg, rectangle1.isSquare());
+		assertFalse(fMsg, rectangle2.isSquare());
+		assertFalse(fMsg, quad.isSquare());
 	}
+
 }

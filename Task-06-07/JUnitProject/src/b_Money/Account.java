@@ -3,11 +3,12 @@ package b_Money;
 import java.util.Hashtable;
 
 public class Account {
-	private Money content;
-	private Hashtable<String, TimedPayment> timedpayments = new Hashtable<>();
 
-	Account(String name, Currency currency) {
-		this.content = new Money(0, currency);
+	private Money money;
+	private final Hashtable<String, TimedPayment> timedPayments = new Hashtable<>();
+
+	public Account(Currency currency) {
+		this.money = new Money(0, currency);
 	}
 
 	/**
@@ -16,12 +17,12 @@ public class Account {
 	 * @param interval Number of ticks between payments
 	 * @param next Number of ticks till first payment
 	 * @param amount Amount of Money to transfer each payment
-	 * @param tobank Bank where receiving account resides
-	 * @param toaccount Id of receiving account
+	 * @param toBank Bank where receiving account resides
+	 * @param toAccount Id of receiving account
 	 */
-	public void addTimedPayment(String id, Integer interval, Integer next, Money amount, Bank tobank, String toaccount) {
-		TimedPayment tp = new TimedPayment(interval, next, amount, this, tobank, toaccount);
-		timedpayments.put(id, tp);
+	public void addTimedPayment(String id, Integer interval, Integer next, Money amount, Bank toBank, String toAccount) {
+		TimedPayment tp = new TimedPayment(interval, next, amount, this, toBank, toAccount);
+		timedPayments.put(id, tp);
 	}
 
 	/**
@@ -29,7 +30,7 @@ public class Account {
 	 * @param id Id of timed payment to remove
 	 */
 	public void removeTimedPayment(String id) {
-		timedpayments.remove(id);
+		timedPayments.remove(id);
 	}
 
 	/**
@@ -37,15 +38,15 @@ public class Account {
 	 * @param id Id of timed payment to check for
 	 */
 	public boolean timedPaymentExists(String id) {
-		return timedpayments.containsKey(id);
+		return timedPayments.containsKey(id);
 	}
 
 	/**
 	 * A time unit passes in the system
 	 */
 	public void tick() {
-		for (TimedPayment tp : timedpayments.values()) {
-			tp.tick(); tp.tick();
+		for (TimedPayment tp : timedPayments.values()) {
+			tp.tick();
 		}
 	}
 
@@ -54,7 +55,7 @@ public class Account {
 	 * @param money Money to deposit.
 	 */
 	public void deposit(Money money) {
-		content = content.add(money);
+		this.money = this.money.add(money);
 	}
 
 	/**
@@ -62,7 +63,7 @@ public class Account {
 	 * @param money Money to withdraw.
 	 */
 	public void withdraw(Money money) {
-		content = content.sub(money);
+		this.money = this.money.sub(money);
 	}
 
 	/**
@@ -70,24 +71,26 @@ public class Account {
 	 * @return Amount of Money currently on account
 	 */
 	public Money getBalance() {
-		return content;
+		return money;
 	}
 
 	/* Everything below belongs to the private inner class, TimedPayment */
-	private class TimedPayment {
-		private int interval, next;
-		private Account fromaccount;
-		private Money amount;
-		private Bank tobank;
-		private String toaccount;
+	private static class TimedPayment {
 
-		TimedPayment(Integer interval, Integer next, Money amount, Account fromaccount, Bank tobank, String toaccount) {
+		private final int interval;
+		private final Account fromAccount;
+		private final Money amount;
+		private final Bank toBank;
+		private final String toAccount;
+		private int next;
+
+		public TimedPayment(Integer interval, Integer next, Money amount, Account fromAccount, Bank toBank, String toAccount) {
 			this.interval = interval;
 			this.next = next;
 			this.amount = amount;
-			this.fromaccount = fromaccount;
-			this.tobank = tobank;
-			this.toaccount = toaccount;
+			this.fromAccount = fromAccount;
+			this.toBank = toBank;
+			this.toAccount = toAccount;
 		}
 
 		/* Return value indicates whether a transfer was initiated */
@@ -95,22 +98,21 @@ public class Account {
 			if (next == 0) {
 				next = interval;
 
-				fromaccount.withdraw(amount);
+				fromAccount.withdraw(amount);
 				try {
-					tobank.deposit(toaccount, amount);
+					toBank.deposit(toAccount, amount);
 				}
 				catch (AccountDoesNotExistException e) {
 					/* Revert transfer.
 					 * In reality, this should probably cause a notification somewhere. */
-					fromaccount.deposit(amount);
+					fromAccount.deposit(amount);
 				}
 				return true;
 			}
-			else {
-				next--;
-				return false;
-			}
+			next--;
+			return false;
 		}
+
 	}
 
 }

@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MoneyTest {
-	Currency SEK, DKK, NOK, EUR;
+	Currency SEK, DKK, EUR;
 	Money SEK100, EUR10, SEK200, EUR20, SEK0, EUR0, SEKn100;
 	
 	@Before
@@ -124,4 +124,5 @@ public class MoneyTest {
 		assertEquals(1, new Money(7000, EUR).compareTo(EUR20));
 		assertEquals(1, new Money(-4000, SEK).compareTo(SEKn100));
 	}
+
 }

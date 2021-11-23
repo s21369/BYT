@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CurrencyTest {
-	Currency SEK, DKK, NOK, EUR;
+	Currency SEK, DKK, EUR;
 	
 	@Before
 	public void setUp() throws Exception {

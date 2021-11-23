@@ -2,8 +2,8 @@ package b_Money;
 
 public class Money implements Comparable {
 
-	private int amount;
-	private Currency currency;
+	private final int amount;
+	private final Currency currency;
 
 	/**
 	 * New Money
@@ -87,7 +87,7 @@ public class Money implements Comparable {
 	 * @return True if the amount of this Money is equal to 0.0, False otherwise
 	 */
 	public Boolean isZero() {
-		return amount == 0 ? true : false;
+		return amount == 0;
 	}
 	/**
 	 * Negate the amount of money, i.e. if the amount is 10.0 SEK the negation returns -10.0 SEK

@@ -1,11 +1,11 @@
 package a_Introductory;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LineTest {
+
 	Point p1, p2;
 	Point p3, p4;
 	Line l1;

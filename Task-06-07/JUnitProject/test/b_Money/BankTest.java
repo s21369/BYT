@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BankTest {
+
 	Currency SEK, DKK;
 	Bank SweBank, Nordea, DanskeBank;
 	
@@ -73,12 +74,12 @@ public class BankTest {
 	public void testTransfer() throws AccountDoesNotExistException {
 		String accFrom = "Bob";
 		String accTo = "Ulrika";
-		int amountBefore = 1_000_000;
-		int amountAfter = 500_000;
-		SweBank.deposit(accFrom, new Money(amountBefore, SEK));
-		SweBank.transfer(accFrom, accTo, new Money(amountAfter, SEK));
-		assertEquals(Integer.valueOf(amountAfter), SweBank.getBalance(accFrom));
-		assertEquals(Integer.valueOf(amountAfter), SweBank.getBalance(accTo));
+		int amountDeposit = 1_000_000;
+		int amount = 500_000;
+		SweBank.deposit(accFrom, new Money(amountDeposit, SEK));
+		SweBank.transfer(accFrom, accTo, new Money(amount, SEK));
+		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accFrom));
+		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accTo));
 	}
 	
 	@Test
@@ -88,7 +89,7 @@ public class BankTest {
 		int amountDeposit = 1_000_000;
 		int amount = 100_000;
 		SweBank.deposit(accFrom, new Money(amountDeposit, SEK));
-		SweBank.addTimedPayment(accFrom, "tp1", 1, 1, new Money(amount, SEK), SweBank, accTo);
+		SweBank.addTimedPayment(accFrom, "tp1", 0, 0, new Money(amount, SEK), SweBank, accTo);
 		for (int i = 0; i < 5; i++) {
 			SweBank.tick();
 		}
