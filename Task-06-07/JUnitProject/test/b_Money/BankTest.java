@@ -24,41 +24,75 @@ public class BankTest {
 
 	@Test
 	public void testGetName() {
-		fail("Write test case here");
+		assertEquals("SweBank", SweBank.getName());
+		assertEquals("Nordea", Nordea.getName());
+		assertEquals("DanskeBank", DanskeBank.getName());
 	}
 
 	@Test
 	public void testGetCurrency() {
-		fail("Write test case here");
+		assertSame(SEK, SweBank.getCurrency());
+		assertSame(SEK, Nordea.getCurrency());
+		assertSame(DKK, DanskeBank.getCurrency());
 	}
 
 	@Test
 	public void testOpenAccount() throws AccountExistsException, AccountDoesNotExistException {
-		fail("Write test case here");
+		String acc1 = "Bohdan";
+		DanskeBank.openAccount(acc1);
+		assertNotNull(DanskeBank.getBalance(acc1));
 	}
 
 	@Test
 	public void testDeposit() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		String acc = "Ulrika";
+		int amount = 100_000;
+		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
+		SweBank.deposit(acc, new Money(amount, SEK));
+		assertEquals(Integer.valueOf(amount), SweBank.getBalance(acc));
 	}
 
 	@Test
 	public void testWithdraw() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		String acc = "Ulrika";
+		int amount = 100_000;
+		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
+		SweBank.deposit(acc, new Money(amount, SEK));
+		assertEquals(Integer.valueOf(amount), SweBank.getBalance(acc));
+		SweBank.withdraw(acc, new Money(amount, SEK));
+		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
 	}
 	
 	@Test
 	public void testGetBalance() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		assertEquals(Integer.valueOf(0), SweBank.getBalance("Ulrika"));
+		assertEquals(Integer.valueOf(0), Nordea.getBalance("Bob"));
 	}
 	
 	@Test
 	public void testTransfer() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		String accFrom = "Bob";
+		String accTo = "Ulrika";
+		int amountBefore = 1_000_000;
+		int amountAfter = 500_000;
+		SweBank.deposit(accFrom, new Money(amountBefore, SEK));
+		SweBank.transfer(accFrom, accTo, new Money(amountAfter, SEK));
+		assertEquals(Integer.valueOf(amountAfter), SweBank.getBalance(accFrom));
+		assertEquals(Integer.valueOf(amountAfter), SweBank.getBalance(accTo));
 	}
 	
 	@Test
 	public void testTimedPayment() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		String accFrom = "Bob";
+		String accTo = "Ulrika";
+		int amountDeposit = 1_000_000;
+		int amount = 100_000;
+		SweBank.deposit(accFrom, new Money(amountDeposit, SEK));
+		SweBank.addTimedPayment(accFrom, "tp1", 1, 1, new Money(amount, SEK), SweBank, accTo);
+		for (int i = 0; i < 5; i++) {
+			SweBank.tick();
+		}
+		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accFrom));
+		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accTo));
 	}
 }

@@ -17,28 +17,42 @@ public class AccountTest {
 		SweBank = new Bank("SweBank", SEK);
 		SweBank.openAccount("Alice");
 		testAccount = new Account("Hans", SEK);
-		testAccount.deposit(new Money(10000000, SEK));
-
-		SweBank.deposit("Alice", new Money(1000000, SEK));
+		testAccount.deposit(new Money(10_000_000, SEK));
+		SweBank.deposit("Alice", new Money(1_000_000, SEK));
 	}
 	
 	@Test
 	public void testAddRemoveTimedPayment() {
-		fail("Write test case here");
+		String id = "tp1";
+		testAccount.addTimedPayment(id, 1, 1, new Money(100_000, SEK), SweBank, "Alice");
+		assertTrue(testAccount.timedPaymentExists(id));
+		testAccount.removeTimedPayment(id);
+		assertFalse(testAccount.timedPaymentExists(id));
 	}
 	
 	@Test
 	public void testTimedPayment() throws AccountDoesNotExistException {
-		fail("Write test case here");
+		int nPayments = 5;
+		int amountToPay = 100_000;
+		assertEquals(Integer.valueOf(10_000_000), testAccount.getBalance().getAmount());
+		testAccount.addTimedPayment("tp1", 1, 1, new Money(amountToPay, SEK), SweBank, "Alice");
+		for (int i = 0; i < nPayments; i++) {
+			testAccount.tick();
+		}
+		assertEquals(Integer.valueOf(10_000_000 - amountToPay * nPayments), testAccount.getBalance().getAmount());
 	}
 
 	@Test
 	public void testAddWithdraw() {
-		fail("Write test case here");
+		int amount = 100_000;
+		testAccount.deposit(new Money(amount, SEK));
+		assertEquals(Integer.valueOf(10_000_000 + amount), testAccount.getBalance().getAmount());
+		testAccount.withdraw(new Money(amount, SEK));
+		assertEquals(Integer.valueOf(10_000_000), testAccount.getBalance().getAmount());
 	}
 	
 	@Test
 	public void testGetBalance() {
-		fail("Write test case here");
+		assertEquals(Integer.valueOf(10_000_000), testAccount.getBalance().getAmount());
 	}
 }

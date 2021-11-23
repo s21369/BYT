@@ -79,21 +79,21 @@ public class MoneyTest {
 
 	@Test
 	public void testAdd() {
-		assertTrue(new Money(3000, SEK).equals(SEK100.add(EUR10)));
-		assertTrue(new Money(6000, SEK).equals(SEK200.add(EUR20)));
-		assertTrue(new Money(0, SEK).equals(SEK0.add(EUR0)));
-		assertFalse(new Money(3000, SEK).equals(SEK100.add(EUR20)));
-		assertFalse(new Money(6000, SEK).equals(SEK200.add(EUR10)));
-		assertFalse(new Money(0, SEK).equals(SEKn100.add(EUR0)));
+		assertEquals(-1, new Money(3000, SEK).compareTo(SEK100.add(EUR10)));
+		assertEquals(-1, new Money(6000, SEK).compareTo(SEK200.add(EUR20)));
+		assertEquals(0, new Money(0, SEK).compareTo(SEK0.add(EUR0)));
+		assertEquals(-1, new Money(3000, SEK).compareTo(SEK100.add(EUR20)));
+		assertEquals(-1, new Money(6000, SEK).compareTo(SEK200.add(EUR10)));
+		assertEquals(1, new Money(0, SEK).compareTo(SEKn100.add(EUR0)));
 	}
 
 	@Test
 	public void testSub() {
-		assertEquals(0, new Money(-1500, SEK).compareTo(SEK100.sub(EUR20)));
-		assertEquals(0, new Money(1500, SEK).compareTo(SEK200.sub(EUR10)));
+		assertEquals(1, new Money(-1500, SEK).compareTo(SEK100.sub(EUR20)));
+		assertEquals(-1, new Money(1500, SEK).compareTo(SEK200.sub(EUR10)));
 		assertEquals(0, new Money(0, SEK).compareTo(SEK0.sub(EUR0)));
 		assertEquals(1, new Money(3000, SEK).compareTo(SEK100.sub(EUR20)));
-		assertEquals(1, new Money(6000, SEK).compareTo(SEK200.sub(EUR10)));
+		assertEquals(-1, new Money(6000, SEK).compareTo(SEK200.sub(EUR10)));
 		assertEquals(1, new Money(15000, SEK).compareTo(SEKn100.sub(EUR0)));
 	}
 

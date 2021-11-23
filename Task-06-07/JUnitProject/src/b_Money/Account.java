@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 public class Account {
 	private Money content;
-	private Hashtable<String, TimedPayment> timedpayments = new Hashtable<String, TimedPayment>();
+	private Hashtable<String, TimedPayment> timedpayments = new Hashtable<>();
 
 	Account(String name, Currency currency) {
 		this.content = new Money(0, currency);
@@ -23,7 +23,7 @@ public class Account {
 		TimedPayment tp = new TimedPayment(interval, next, amount, this, tobank, toaccount);
 		timedpayments.put(id, tp);
 	}
-	
+
 	/**
 	 * Remove a timed payment
 	 * @param id Id of timed payment to remove
@@ -31,7 +31,7 @@ public class Account {
 	public void removeTimedPayment(String id) {
 		timedpayments.remove(id);
 	}
-	
+
 	/**
 	 * Check if a timed payment exists
 	 * @param id Id of timed payment to check for
@@ -48,7 +48,7 @@ public class Account {
 			tp.tick(); tp.tick();
 		}
 	}
-	
+
 	/**
 	 * Deposit money to the account
 	 * @param money Money to deposit.
@@ -56,7 +56,7 @@ public class Account {
 	public void deposit(Money money) {
 		content = content.add(money);
 	}
-	
+
 	/**
 	 * Withdraw money from the account
 	 * @param money Money to withdraw.
@@ -80,7 +80,7 @@ public class Account {
 		private Money amount;
 		private Bank tobank;
 		private String toaccount;
-		
+
 		TimedPayment(Integer interval, Integer next, Money amount, Account fromaccount, Bank tobank, String toaccount) {
 			this.interval = interval;
 			this.next = next;
@@ -90,7 +90,7 @@ public class Account {
 			this.toaccount = toaccount;
 		}
 
-		/* Return value indicates whether or not a transfer was initiated */
+		/* Return value indicates whether a transfer was initiated */
 		public Boolean tick() {
 			if (next == 0) {
 				next = interval;
