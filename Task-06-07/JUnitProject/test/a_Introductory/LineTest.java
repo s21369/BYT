@@ -21,11 +21,13 @@ public class LineTest {
 		p4 = new Point(8, 12);
 		l2 = new Line(p3, p4);
 	}
-	
+
+	// added error message
 	@Test
 	public void testLength() {
-		assertEquals(10.0498756, l1.getLength(), 0.0001);
-		assertEquals(10.0498756, l2.getLength(), 0.0001);
+		String msg = "Should be 10.0498756";
+		assertEquals(msg, 10.0498756, l1.getLength(), 0.0001);
+		assertEquals(msg, 10.0498756, l2.getLength(), 0.0001);
 		assertTrue("l1 should have same length as l2", l1.isSameLengthAs(l2));
 	}
 

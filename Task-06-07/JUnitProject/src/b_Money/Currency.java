@@ -2,6 +2,7 @@ package b_Money;
 
 public class Currency {
 
+	// added final keyword
 	private final String name;
 	private Double rate;
 	
@@ -14,7 +15,8 @@ public class Currency {
 	 * @param name The name of this Currency
 	 * @param rate The exchange rate of this Currency
 	 */
-	Currency (String name, Double rate) {
+	// added public keyword
+	public Currency (String name, Double rate) {
 		this.name = name;
 		this.rate = rate;
 	}

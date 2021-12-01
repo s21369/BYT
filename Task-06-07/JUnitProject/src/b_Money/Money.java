@@ -2,6 +2,7 @@ package b_Money;
 
 public class Money implements Comparable {
 
+	// added final keyword
 	private final int amount;
 	private final Currency currency;
 
@@ -14,7 +15,8 @@ public class Money implements Comparable {
 		this.amount = amount;
 		this.currency = currency;
 	}
-	
+
+	// fixed type specification
 	/**
 	 * Return the amount of money.
 	 * @return Amount of money in Integer type.

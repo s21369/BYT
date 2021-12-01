@@ -1,10 +1,7 @@
 package a_Introductory;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
-import a_Introductory.Fibonacci;
 
 public class FibonacciTest {
 

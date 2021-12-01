@@ -8,6 +8,7 @@ public class Vector2DTest {
 
 	Vector2D v1, v2, v3;
 
+	// removed unnecessary exception
 	@Before
 	public void setUp() {
 		/* v1 and v3 are orthogonal, v1 and v2 aren't. */

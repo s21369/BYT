@@ -2,8 +2,10 @@ package a_Introductory;
 
 public class Line {
 
+	// added final keyword, in other documents same mistake
 	private final Point p1, p2;
-	
+
+	// added public keyword, in other documents same mistake
 	public Line(Point p1, Point p2) {
 		this.p1 = p1;
 		this.p2 = p2;

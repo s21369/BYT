@@ -4,9 +4,12 @@ import java.util.Hashtable;
 
 public class Account {
 
+	// renamed content to money
 	private Money money;
+	// fixed naming to the convention
 	private final Hashtable<String, TimedPayment> timedPayments = new Hashtable<>();
 
+	// added public keyword
 	public Account(Currency currency) {
 		this.money = new Money(0, currency);
 	}
@@ -20,6 +23,7 @@ public class Account {
 	 * @param toBank Bank where receiving account resides
 	 * @param toAccount Id of receiving account
 	 */
+	// fixed namings
 	public void addTimedPayment(String id, Integer interval, Integer next, Money amount, Bank toBank, String toAccount) {
 		TimedPayment tp = new TimedPayment(interval, next, amount, this, toBank, toAccount);
 		timedPayments.put(id, tp);
@@ -44,6 +48,7 @@ public class Account {
 	/**
 	 * A time unit passes in the system
 	 */
+	// removed unnecessary second tick
 	public void tick() {
 		for (TimedPayment tp : timedPayments.values()) {
 			tp.tick();
@@ -75,6 +80,7 @@ public class Account {
 	}
 
 	/* Everything below belongs to the private inner class, TimedPayment */
+	// fixed namings
 	private static class TimedPayment {
 
 		private final int interval;
@@ -109,6 +115,7 @@ public class Account {
 				}
 				return true;
 			}
+			// removed else statement
 			next--;
 			return false;
 		}

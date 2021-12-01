@@ -14,11 +14,13 @@ public class Vector2D {
 		this.x = p2.x - p1.x;
 		this.y = p2.y - p1.y;
 	}
-	
+
+	// fixed (y * v.x) tp (y * v.y)
 	public int dotProduct(Vector2D v) {
 		return (x * v.x) + (y * v.y);
 	}
-	
+
+	// fixed -1 to 0
 	public boolean isOrthogonalTo(Vector2D v) {
 		return (dotProduct(v) == 0);
 	}

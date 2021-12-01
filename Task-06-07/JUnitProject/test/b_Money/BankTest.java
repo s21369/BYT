@@ -1,7 +1,6 @@
 package b_Money;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,51 +24,55 @@ public class BankTest {
 
 	@Test
 	public void testGetName() {
-		assertEquals("SweBank", SweBank.getName());
-		assertEquals("Nordea", Nordea.getName());
-		assertEquals("DanskeBank", DanskeBank.getName());
+		assertEquals("Name should be SweBank", "SweBank", SweBank.getName());
+		assertEquals("Name should be Nordea", "Nordea", Nordea.getName());
+		assertEquals("Name should be DanskeBank", "DanskeBank", DanskeBank.getName());
 	}
 
 	@Test
 	public void testGetCurrency() {
-		assertSame(SEK, SweBank.getCurrency());
-		assertSame(SEK, Nordea.getCurrency());
-		assertSame(DKK, DanskeBank.getCurrency());
+		assertSame("Currency should be SEK", SEK, SweBank.getCurrency());
+		assertSame("Currency should be SEK", SEK, Nordea.getCurrency());
+		assertSame("Currency should be DKK", DKK, DanskeBank.getCurrency());
 	}
 
+	// changed from get to put
 	@Test
 	public void testOpenAccount() throws AccountExistsException, AccountDoesNotExistException {
 		String acc1 = "Bohdan";
+		// open new account
 		DanskeBank.openAccount(acc1);
-		assertNotNull(DanskeBank.getBalance(acc1));
+		assertNotNull("Account should exist", DanskeBank.getBalance(acc1));
 	}
 
 	@Test
 	public void testDeposit() throws AccountDoesNotExistException {
 		String acc = "Ulrika";
 		int amount = 100_000;
-		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
+		assertEquals("Balance should be 0", Integer.valueOf(0), SweBank.getBalance(acc));
 		SweBank.deposit(acc, new Money(amount, SEK));
-		assertEquals(Integer.valueOf(amount), SweBank.getBalance(acc));
+		assertEquals(String.format("Balance should be %d", amount), Integer.valueOf(amount), SweBank.getBalance(acc));
 	}
 
+	// changed from deposit to withdraw
 	@Test
 	public void testWithdraw() throws AccountDoesNotExistException {
 		String acc = "Ulrika";
 		int amount = 100_000;
-		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
+		assertEquals("Balance should be 0", Integer.valueOf(0), SweBank.getBalance(acc));
 		SweBank.deposit(acc, new Money(amount, SEK));
-		assertEquals(Integer.valueOf(amount), SweBank.getBalance(acc));
+		assertEquals(String.format("Balance should be %d", amount), Integer.valueOf(amount), SweBank.getBalance(acc));
 		SweBank.withdraw(acc, new Money(amount, SEK));
-		assertEquals(Integer.valueOf(0), SweBank.getBalance(acc));
+		assertEquals("Balance should be 0", Integer.valueOf(0), SweBank.getBalance(acc));
 	}
 	
 	@Test
 	public void testGetBalance() throws AccountDoesNotExistException {
-		assertEquals(Integer.valueOf(0), SweBank.getBalance("Ulrika"));
-		assertEquals(Integer.valueOf(0), Nordea.getBalance("Bob"));
+		assertEquals("Balance should be 0", Integer.valueOf(0), SweBank.getBalance("Ulrika"));
+		assertEquals("Balance should be 0", Integer.valueOf(0), Nordea.getBalance("Bob"));
 	}
-	
+
+	// changed transfer from "fromAccount" to "toAccount"
 	@Test
 	public void testTransfer() throws AccountDoesNotExistException {
 		String accFrom = "Bob";
@@ -78,10 +81,10 @@ public class BankTest {
 		int amount = 500_000;
 		SweBank.deposit(accFrom, new Money(amountDeposit, SEK));
 		SweBank.transfer(accFrom, accTo, new Money(amount, SEK));
-		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accFrom));
-		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accTo));
+		assertEquals("Balance should be 500,000", Integer.valueOf(500_000), SweBank.getBalance(accFrom));
+		assertEquals("Balance should be 500,000", Integer.valueOf(500_000), SweBank.getBalance(accTo));
 	}
-	
+
 	@Test
 	public void testTimedPayment() throws AccountDoesNotExistException {
 		String accFrom = "Bob";
@@ -93,7 +96,7 @@ public class BankTest {
 		for (int i = 0; i < 5; i++) {
 			SweBank.tick();
 		}
-		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accFrom));
-		assertEquals(Integer.valueOf(500_000), SweBank.getBalance(accTo));
+		assertEquals("Balance should be 500,000", Integer.valueOf(500_000), SweBank.getBalance(accFrom));
+		assertEquals("Balance should be 500,000", Integer.valueOf(500_000), SweBank.getBalance(accTo));
 	}
 }

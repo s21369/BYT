@@ -8,7 +8,8 @@ import org.junit.Test;
 public class QuadrilateralTest {
 
 	Quadrilateral square1, square2, rectangle1, rectangle2, quad;
-	
+
+	// removed unnecessary exception
 	@Before
 	public void setUp() {
 		/* Set up two squares,

@@ -2,6 +2,7 @@ package a_Introductory;
 
 public class Quadrilateral {
 
+	// removed unnecessary points
 	private final Line l1, l2, l3, l4;
 	
 	public Quadrilateral(Point p1, Point p2, Point p3, Point p4) {
@@ -22,7 +23,8 @@ public class Quadrilateral {
 				v3.isOrthogonalTo(v4) &&
 				v4.isOrthogonalTo(v1));
 	}
-	
+
+	// fixed check for all sides
 	public Boolean isSquare() {
 		return (isRectangle() &&
 				l1.isSameLengthAs(l2) &&

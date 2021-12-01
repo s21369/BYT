@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CurrencyTest {
+
+	// removed unnecessary currency
 	Currency SEK, DKK, EUR;
 	
 	@Before
@@ -25,33 +27,33 @@ public class CurrencyTest {
 	
 	@Test
 	public void testGetRate() {
-		assertEquals(Double.valueOf(0.15), SEK.getRate());
-		assertEquals(Double.valueOf(0.20), DKK.getRate());
-		assertEquals(Double.valueOf(1.5), EUR.getRate());
+		assertEquals("Rate should be 0.15", Double.valueOf(0.15), SEK.getRate());
+		assertEquals("Rate should be 0.20", Double.valueOf(0.20), DKK.getRate());
+		assertEquals("Rate should be 1.5", Double.valueOf(1.5), EUR.getRate());
 	}
 	
 	@Test
 	public void testSetRate() {
 		EUR.setRate(1.3);
-		assertEquals(Double.valueOf(1.3), EUR.getRate());
+		assertEquals("Rate should be 1.3", Double.valueOf(1.3), EUR.getRate());
 		DKK.setRate(0.25);
-		assertEquals(Double.valueOf(0.25), DKK.getRate());
+		assertEquals("Rate should be 0.25", Double.valueOf(0.25), DKK.getRate());
 		SEK.setRate(0.17);
-		assertEquals(Double.valueOf(0.17), SEK.getRate());
+		assertEquals("Rate should be 0.17", Double.valueOf(0.17), SEK.getRate());
 	}
 	
 	@Test
 	public void testGlobalValue() {
-		assertEquals(Integer.valueOf(225), SEK.universalValue(1500));
-		assertEquals(Integer.valueOf(400), DKK.universalValue(2000));
-		assertEquals(Integer.valueOf(1500), EUR.universalValue(1000));
+		assertEquals("Value should be 255", Integer.valueOf(225), SEK.universalValue(1500));
+		assertEquals("Value should be 400", Integer.valueOf(400), DKK.universalValue(2000));
+		assertEquals("Value should be 1,500", Integer.valueOf(1500), EUR.universalValue(1000));
 	}
 	
 	@Test
 	public void testValueInThisCurrency() {
-		assertEquals(Integer.valueOf(15000), SEK.valueInThisCurrency(1500, EUR));
-		assertEquals(Integer.valueOf(525), DKK.valueInThisCurrency(700, SEK));
-		assertEquals(Integer.valueOf(200), EUR.valueInThisCurrency(1500, DKK));
+		assertEquals("Value in currency should be 15,000", Integer.valueOf(15000), SEK.valueInThisCurrency(1500, EUR));
+		assertEquals("Value in currency should be 525", Integer.valueOf(525), DKK.valueInThisCurrency(700, SEK));
+		assertEquals("Value in currency should be 200", Integer.valueOf(200), EUR.valueInThisCurrency(1500, DKK));
 	}
 
 }
